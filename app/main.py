@@ -2,15 +2,16 @@ import shlex
 import sys
 import shutil
 
+BUILTIN = {"echo", "type", "exit"}
+
 def main():
-    BUILTIN = ["echo", "type", "exit"]
     while True:
         sys.stdout.write("$ ")
         sys.stdout.flush()
 
         try:
             user_input = input()
-        except EOFError or KeyboardInterrupt:
+        except (EOFError, KeyboardInterrupt):
             print()
             break
         
@@ -27,10 +28,11 @@ def main():
             print(" ".join(args[1:]))
         
         elif cmd == "type":
+            path = shutil.which(args[1])
             if args[1] in BUILTIN:
                 print(f"{args[1]} is a shell builtin")
-            elif shutil.which(args[1]) is not None:
-                print(f"{args[1]} is {shutil.which(args[1])}")
+            elif path is not None:
+                print(f"{args[1]} is in {path}")
             else: 
                 print(f"{args[1]}: not found")
         else:
