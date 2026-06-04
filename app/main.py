@@ -32,7 +32,7 @@ def main():
             if args[1] in BUILTIN:
                 print(f"{args[1]} is a shell builtin")
             elif path is not None:
-                print(f"{args[1]} is in {path}")
+                print(f"{args[1]} is {path}")
             else: 
                 print(f"{args[1]}: not found")
         else:
