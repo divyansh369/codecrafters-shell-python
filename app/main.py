@@ -29,13 +29,17 @@ def main():
             print(" ".join(args[1:]))
         
         elif cmd == "type":
-            path = shutil.which(args[1])
-            if args[1] in BUILTIN:
-                print(f"{args[1]} is a shell builtin")
+            if len(args) < 2:
+                print("type: missing operand")
+                continue
+            target = args[1]
+            path = shutil.which(target)
+            if target in BUILTIN:
+                print(f"{target} is a shell builtin")
             elif path is not None:
-                print(f"{args[1]} is {path}")
-            else: 
-                print(f"{args[1]}: not found")
+                print(f"{target} is {path}")
+            else:
+                print(f"{target}: not found")
         else:
             try:
                 subprocess.run(args)
