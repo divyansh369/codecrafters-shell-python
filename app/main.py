@@ -38,7 +38,7 @@ def main():
                 print(f"{args[1]}: not found")
         else:
             try:
-                subprocess.run([cmd,*args[1:]])
+                subprocess.run(args)
             except FileNotFoundError:
                 print(f"{cmd}: command not found")
 
