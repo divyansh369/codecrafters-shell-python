@@ -40,7 +40,7 @@ def main():
             print(f"{cmd}: command not found")
 
         result = subprocess.run([cmd,*args[1:]],capture_output=True, text=True)
-        print(result)
+        print(result,end="\n")
 
 if __name__ == "__main__":
     main()
