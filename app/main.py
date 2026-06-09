@@ -1,6 +1,7 @@
 import shlex
 import sys
 import shutil
+import subprocess
 
 BUILTIN = {"echo", "type", "exit"}
 
@@ -23,7 +24,7 @@ def main():
 
         if cmd == "exit":
             break
-    
+
         if cmd == "echo":
             print(" ".join(args[1:]))
         
@@ -38,6 +39,9 @@ def main():
         else:
             print(f"{cmd}: command not found")
 
+        if cmd in shutil.which(args[0]):
+            result = subprocess.run([cmd,*args[1:]],capture_output=True, text=True)
+            print(result)
 
 if __name__ == "__main__":
     main()
