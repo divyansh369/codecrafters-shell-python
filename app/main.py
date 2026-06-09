@@ -39,9 +39,8 @@ def main():
         else:
             print(f"{cmd}: command not found")
 
-        if cmd in shutil.which(args[0]):
-            result = subprocess.run([cmd,*args[1:]],capture_output=True, text=True)
-            print(result)
+        result = subprocess.run([cmd,*args[1:]],capture_output=True, text=True)
+        print(result)
 
 if __name__ == "__main__":
     main()
