@@ -42,6 +42,13 @@ def parse_redirect(args):
     return is_redirect, redirect_file
 
 def handle_type_cmd(args,redirect_file,is_redirect):
+    '''
+        Handles the 'type' command by determining if the specified command is a shell builtin, an executable in the system's PATH, or not found.
+        Args:
+            args (list): The list of command arguments, where the second element is the target command to be checked.
+            redirect_file (str | None): The file to which the output should be redirected. If None, the output will be printed to the terminal.
+            is_redirect (bool): A boolean indicating whether output redirection is present.
+    '''
     if len(args) < 2:
         print("type: missing operand")
         return 
