@@ -13,7 +13,7 @@ def write_output(text, redirect_file=None):
         redirect_file (str | None): The file to which the output should be redirected. If None, the output
 
     '''
-    if redirect_file:
+    if redirect_file :
         with open(redirect_file,'w') as f:
             f.write(text+'\n')
     else:
@@ -96,8 +96,9 @@ def main():
             break
         
         if cmd == "echo":
-            write_output(" ".join(args[1:]), redirect_file)
-
+            target_file = redirect_file if stream_type == "stdout" else None  
+            write_output(" ".join(args[1:]), target_file)
+                
         # elif cmd == "type":
         #     handle_type_cmd(args, redirect_file, is_redirect)
 
