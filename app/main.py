@@ -32,7 +32,7 @@ def parse_redirect(args):
     if '>' in args: operator='>'
     elif '1>' in args: operator='1>'
     elif '2>' in args: operator='2>'
-    
+
     redirect_idx = args.index(operator)
 
     if redirect_idx == len(args)-1:
@@ -42,7 +42,7 @@ def parse_redirect(args):
     redirect_file = args[redirect_idx +1 ]
     cleaned_args = args[:redirect_idx]
     
-    stream_type='stderr' if operator=='2>' else 'stdout'
+    stream_type = "stderr" if operator == "2>" else "stdout"    
 
     return cleaned_args,stream_type, redirect_file
 
