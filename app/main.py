@@ -33,7 +33,7 @@ def parse_redirect(args):
     elif '1>' in args: operator='1>'
     elif '2>' in args: operator='2>'
 
-    if operator is None:
+    if not operator:
         return args,None,None
 
     redirect_idx = args.index(operator)
