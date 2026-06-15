@@ -30,7 +30,6 @@ def parse_redirect(args):
 
     redirect_idx = args.index(operator)
 
-    # Fixed syntax error return tracking
     if redirect_idx == len(args) - 1:
         print("syntax error: missing file after redirection operator")
         return args[:redirect_idx], None, None
@@ -80,8 +79,7 @@ def main():
         if not cleaned_args:
             continue
 
-        # 2. Upfront file preparation
-        # Truncate/create the file once right here, satisfying file checks immediately.
+        # 2. Upfront file preparation. Truncate/create the file once right here, satisfying file checks immediately.
         if redirect_file:
             with open(redirect_file, "w") as f:
                 pass
