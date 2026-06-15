@@ -46,6 +46,7 @@ def parse_redirect(args):
 
     return cleaned_args,stream_type, redirect_file
 
+
 def handle_type_cmd(args,redirect_file,is_redirect):
     '''
         Handles the 'type' command by determining if the specified command is a shell builtin, an executable in the system's PATH, or not found.
@@ -102,9 +103,9 @@ def main():
                 if redirect_file:
                     with open(redirect_file,'w') as f:
                         if stream_type == "stderr":
-                            subprocess.run(cleaned_args, stdout=f)
-                        else:
                             subprocess.run(cleaned_args, stderr=f)
+                        else:
+                            subprocess.run(cleaned_args, stdout=f)
                 else:
                     subprocess.run(cleaned_args)
             except FileNotFoundError:
