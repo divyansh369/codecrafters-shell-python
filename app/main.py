@@ -54,7 +54,7 @@ def parse_redirect(args):
     return cleaned_args,stream_type, redirect_file
 
 
-def handle_type_cmd(args,redirect_file,is_redirect):
+def handle_type_cmd(args,redirect_file):
     '''
         Handles the 'type' command by determining if the specified command is a shell builtin, an executable in the system's PATH, or not found.
         Args:
@@ -70,10 +70,10 @@ def handle_type_cmd(args,redirect_file,is_redirect):
     if target in BUILTIN:
         write_output(f"{target} is a shell builtin")
     elif path is not None:
-        if is_redirect:
-            write_output(f"{target} is {path}", redirect_file)
-        else:
+        if not redirect_file:
             write_output(f"{target} is {path}")
+        else:
+            write_output(f"{target} is {path}", redirect_file)
     else:
         write_output(f"{target}: not found", redirect_file)
 
