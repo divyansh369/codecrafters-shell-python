@@ -14,7 +14,7 @@ def write_output(text, redirect_file=None):
 
     '''
     if redirect_file :
-        with open(redirect_file,'w') as f:
+        with open(redirect_file,'a') as f:
             f.write(text+'\n')
     else:
         print(text)
@@ -44,6 +44,10 @@ def parse_redirect(args):
 
     redirect_file = args[redirect_idx +1 ]
     cleaned_args = args[:redirect_idx]
+
+    if redirect_file:
+        with open(redirect_file, "w") as f:
+            pass
     
     stream_type = "stderr" if operator == "2>" else "stdout"    
 
