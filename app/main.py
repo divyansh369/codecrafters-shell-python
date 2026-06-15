@@ -103,8 +103,9 @@ def main():
             target_file = redirect_file if stream_type == "stdout" else None  
             write_output(" ".join(cleaned_args[1:]), target_file)
                 
-        # elif cmd == "type":
-        #     handle_type_cmd(args, redirect_file, is_redirect)
+        elif cmd == "type":
+            target_file = redirect_file if stream_type == "stdout" else None  
+            handle_type_cmd(cleaned_args, target_file)
 
         else:
             try:
