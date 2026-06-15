@@ -27,19 +27,24 @@ def parse_redirect(args):
         Returns:
             tuple: A tuple containing a boolean indicating whether redirection is present and the target file for
     '''
-    is_redirect = False
     redirect_file = None
-
-    if '>' in args or '1>' in args:
-        is_redirect = True
-        redirect_idx = args.index('1>') if '1>' in args else args.index('>')
-        if redirect_idx == len(args) -1:
-            print("syntax error")
-            return is_redirect, redirect_file
-        redirect_file = args[redirect_idx+1]
-        args = args[:redirect_idx]
+    operator = None
+    if '>' in args: operator='>'
+    elif '1>' in args: operator='1>'
+    elif '2>' in args: operator='2>'
     
-    return is_redirect, redirect_file
+    redirect_idx = args.index(operator)
+
+    if redirect_idx == len(args)-1:
+        print("syntax error")
+        return args[redirect_idx+1], None,None
+
+    redirect_file = args[redirect_idx +1 ]
+    cleaned_args = args[:redirect_idx]
+    
+    stream_type='stderr' if operator=='2>' else 'stdout'
+
+    return cleaned_args,stream_type, redirect_file
 
 def handle_type_cmd(args,redirect_file,is_redirect):
     '''
@@ -79,7 +84,7 @@ def main():
             continue
         
         args = shlex.split(user_input)
-        is_redirect, redirect_file = parse_redirect(args)
+        cleaned_args,stream_type,redirect_file = parse_redirect(args)
 
         cmd = args[0]
 
@@ -89,16 +94,19 @@ def main():
         if cmd == "echo":
             write_output(" ".join(args[1:]), redirect_file)
 
-        elif cmd == "type":
-            handle_type_cmd(args, redirect_file, is_redirect)
+        # elif cmd == "type":
+        #     handle_type_cmd(args, redirect_file, is_redirect)
 
         else:
             try:
                 if redirect_file:
                     with open(redirect_file,'w') as f:
-                        subprocess.run(args, stdout=f)
+                        if stream_type == "stderr":
+                            subprocess.run(cleaned_args, stdout=f)
+                        else:
+                            subprocess.run(cleaned_args, stderr=f)
                 else:
-                    subprocess.run(args)
+                    subprocess.run(cleaned_args)
             except FileNotFoundError:
                 print(f"{cmd}: command not found")
 
