@@ -90,14 +90,14 @@ def main():
         args = shlex.split(user_input)
         cleaned_args,stream_type,redirect_file = parse_redirect(args)
 
-        cmd = args[0]
+        cmd = cleaned_args[0]
 
         if cmd == "exit":
             break
         
         if cmd == "echo":
             target_file = redirect_file if stream_type == "stdout" else None  
-            write_output(" ".join(args[1:]), target_file)
+            write_output(" ".join(cleaned_args), target_file)
                 
         # elif cmd == "type":
         #     handle_type_cmd(args, redirect_file, is_redirect)
